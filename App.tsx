@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Notifications } from "./src/screens/home/Notifications";
+import CustomDrawer from "./src/components/CustomDrawer";
+import { COLORS } from "./src/constants/colors";
+import BottomTabNavigator from "./src/navigation/BottomTabNavigator";
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Drawer.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: COLORS.PRIMARY_GREEN,
+          },
+          headerTitleStyle: {
+            display: "none",
+          },
+          headerTintColor: COLORS.WHITE,
+        }}
+        drawerContent={(props) => <CustomDrawer {...props} />}
+      >
+        <Drawer.Screen name="Home" component={BottomTabNavigator} />
+        <Drawer.Screen name="Notifications" component={Notifications} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
